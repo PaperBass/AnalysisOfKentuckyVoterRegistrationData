@@ -1,5 +1,7 @@
 import pandas as pd
 from pprint import pprint
+import time
+
 #used to load dictionary from countydict.txt file
 import ast
 
@@ -21,17 +23,24 @@ while True:
         # this asks the user to select a county to load
         def askforcounty():
             x = input("Which county would you like to examine?\n").upper()
+            print(x)
+
             # This looks for the user's response in the list of available counties
             for county in counties.keys():
+
                 # if the requested county is found, the df will be printed
-                if x == county:
-                    try:
-                        # here, the .iloc command inverts the columns and rows
-                        print(df.iloc[counties[x]])
-                        input("Press RETURN to continue.")
-                        continue
-                    except:
-                        # error message if the requested county is not found
-                        print("County not found.\n")
+                try:
+
+                    # here, the .iloc command inverts the columns and rows
+                    print(df.iloc[counties[x]])
+                    input("Press RETURN to continue.")
+                    return
+
+                except:
+
+                    # error message if the requested county is not found
+                    print("County not found.\n")
+                    time.sleep(2)
+                    return
         askforcounty()
     main() 
