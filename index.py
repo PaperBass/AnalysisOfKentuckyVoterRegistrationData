@@ -10,13 +10,19 @@ import ast
 with open("/Users/nigelmeyer/Desktop/Python/Voter_Data/countydict.txt", "r") as data:
     counties = ast.literal_eval(data.read())
 
+# reads voterstats Excel sheet into a pandas DataFrame
+df = pd.read_excel(r"/Users/nigelmeyer/Desktop/Python/Voter_Data/voterstats-20220215-080324.xls")
+
+df[['index', 'County']] = df['County'].str.split(expand=True)
+
+print(df)
 
 def comparecounty(df):
     county1 = input("To compare two counties, pick the first county by typing its name:\n").upper()
     county2 = input("Now select the second county by typing the name:\n").upper()
 
     try:
-        print(df[df["County"].isin([[county1], [county2]])])
+        print(df["County"].isin([[county1], [county2]]))
         input("Press RETURN to continue.")
     except:
         print("Counties not found.\n")
@@ -48,7 +54,7 @@ def askforcounty(df):
     
 
 # main function
-def main():
+def main(df):
 
     # loops program
     while True:
@@ -57,17 +63,13 @@ def main():
         for county in counties.keys():
             print(county)
 
-        # reads voterstats Excel sheet into a pandas DataFrame
-        df = pd.read_excel(r"/Users/nigelmeyer/Desktop/Python/Voter_Data/voterstats-20220215-080324.xls")
-
-        # comparing two counties
         # print(df)
-        df["County"]= df["County"].str.split()
+        #df["County"]= df["County"].str.split()
         # print("new dataFrame: \n", df)
 
-        # comparecounty(df)
+        #comparecounty(df)
 
-        askforcounty(df)
+        #askforcounty(df)
 
-if __name__ == "__main__":
-    main() 
+#if __name__ == "__main__":
+    #main(df) 
