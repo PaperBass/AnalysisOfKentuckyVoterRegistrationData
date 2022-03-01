@@ -13,6 +13,7 @@ with open("/Users/nigelmeyer/Desktop/Python/Voter_Data/countydict.txt", "r") as 
 # reads voterstats Excel sheet into a pandas DataFrame
 df = pd.read_excel(r"/Users/nigelmeyer/Desktop/Python/Voter_Data/voterstats-20220215-080324.xls")
 
+# splits the 'County' column after the index number into 'Index' and 'County' columns
 df[['index', 'County']] = df['County'].str.split(expand=True)
 
 print(df)
@@ -22,7 +23,7 @@ def comparecounty(df):
     county2 = input("Now select the second county by typing the name:\n").upper()
 
     try:
-        print(df["County"].isin([[county1], [county2]]))
+        print(df[df['County'].isin([county1, county2])])
         input("Press RETURN to continue.")
     except:
         print("Counties not found.\n")
@@ -67,9 +68,9 @@ def main(df):
         #df["County"]= df["County"].str.split()
         # print("new dataFrame: \n", df)
 
-        #comparecounty(df)
+        comparecounty(df)
 
         #askforcounty(df)
 
-#if __name__ == "__main__":
-    #main(df) 
+if __name__ == "__main__":
+    main(df) 
