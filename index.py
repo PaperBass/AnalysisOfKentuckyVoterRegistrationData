@@ -1,8 +1,8 @@
-from calendar import c
+
 import pandas as pd
 from pprint import pprint
 import time
-import numpy as np
+
 
 #used to load dictionary from countydict.txt file
 import ast
