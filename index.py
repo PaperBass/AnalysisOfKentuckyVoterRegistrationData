@@ -1,3 +1,4 @@
+from calendar import c
 import pandas as pd
 from pprint import pprint
 import time
@@ -16,43 +17,6 @@ df = pd.read_excel(r"/Users/nigelmeyer/Desktop/Python/Voter_Data/voterstats-2022
 # splits the 'County' column after the index number into 'Index' and 'County' columns
 df[['index', 'County']] = df['County'].str.split(expand=True)
 
-print(df)
-
-def comparecounty(df):
-    county1 = input("To compare two counties, pick the first county by typing its name:\n").upper()
-    county2 = input("Now select the second county by typing the name:\n").upper()
-
-    try:
-        print(df[df['County'].isin([county1, county2])])
-        input("Press RETURN to continue.")
-    except:
-        print("Counties not found.\n")
-        time.sleep(2)
-        return
-
-def askforcounty(df):
-
-    # this asks the user to select a county to load
-    x = input("Which county would you like to examine?\n\nOr type 'Statewide Totals' to receive statewide totals.").upper()
-
-    # This looks for the user's response in the list of available counties
-    for county in counties:
-
-        # if the requested county is found, the df will be printed
-        try:
-        
-            # here, the .iloc command inverts the columns and rows
-            print(df.iloc[counties[x]])
-            input("Press RETURN to continue.")
-            return
-
-        except:
-
-            # error message if the requested county is not found
-            print("County not found.\n")
-            time.sleep(2)
-            return
-    
 
 # main function
 def main(df):
@@ -63,14 +27,37 @@ def main(df):
         # prints list of available counties
         for county in counties.keys():
             print(county)
+        
+        print('\n')
 
-        # print(df)
-        #df["County"]= df["County"].str.split()
-        # print("new dataFrame: \n", df)
+        printcountychoices(df)
 
-        comparecounty(df)
+# asks user to list all the counties they wish to compare and waits for "C" to be input to continue
+# this function is called in the printcountychoices() function
+def continuouscounty():
+    county_list = ''
+    while True:
+        county = input("List the counties you would like to see and press enter:\n\
+            Then enter 'C' when you're ready to continue\n").upper()
+        county_list += county + ' '
+        if county == 'C':
+            return county_list
 
-        #askforcounty(df)
+        print('\n',county_list) 
+
+# prints the counties the user has requested
+def printcountychoices(df):    
+    try:
+        counties = continuouscounty().split()[:-1]
+        print(df[df['County'].isin(counties)])
+        input("Press RETURN to continue.")
+    except:
+        print("Counties not found.\n")
+        time.sleep(2)
+        return
+
+
+
 
 if __name__ == "__main__":
     main(df) 
