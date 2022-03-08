@@ -2,9 +2,10 @@
 import pandas as pd
 from pprint import pprint
 import time
+from os import sys
 
 
-#used to load dictionary from countydict.txt file
+# imports countydict.txt file
 import ast
 
 # loads dictionary from countydict.txt file
@@ -37,24 +38,31 @@ def main(df):
 def continuouscounty():
     county_list = ''
     while True:
-        county = input("List the counties you would like to see and press enter:\n\
-            Then enter 'C' when you're ready to continue\n").upper()
+        county = input(
+                    "List the counties you would like to see and press enter:\n\
+                    Then enter 'C' when you're ready to continue.\n\
+                    Enter 'Q' to quit at anytime\n").upper()
         county_list += county + ' '
-        if county == 'C':
+        if county == 'Q':
             return county_list
+        elif county == 'C':
+            return county_list      
+    
 
-        print('\n',county_list) 
 
 # prints the counties the user has requested
-def printcountychoices(df):    
-    try:
-        counties = continuouscounty().split()[:-1]
-        print(df[df['County'].isin(counties)])
-        input("Press RETURN to continue.")
-    except:
-        print("Counties not found.\n")
-        time.sleep(2)
-        return
+def printcountychoices(df):
+    counties = continuouscounty()
+    if 'Q' in counties:
+            sys.exit(0)
+    else:        
+        try:
+            print(df[df['County'].isin(counties.split()[:-1])])
+            input("Press RETURN to continue.")
+        except:
+            print("Counties not found.\n")
+            time.sleep(2)
+            return
 
 
 
