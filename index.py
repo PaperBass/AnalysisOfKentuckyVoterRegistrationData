@@ -10,8 +10,10 @@ import matplotlib.pyplot as plt
 import ast
 
 # loads dictionary from countydict.txt file
-with open("/Users/nigelmeyer/Desktop/Python/Voter_Data/countydict.txt", "r") as data:
+with open("Voter_Data/countydict.txt", "r") as data:
     counties = ast.literal_eval(data.read())
+# with open("Voter_Data/demographicsdict.txt", "r") as data:
+#     counties = ast.literal_eval(data.read())
 
 # reads voterstats Excel sheet into a pandas DataFrame
 df = pd.read_excel(r"/Users/nigelmeyer/Desktop/Python/Voter_Data/voterstats-20220215-080324.xls")
