@@ -1,0 +1,12 @@
+{'Dem':'Democrat',
+'Rep': 'Republican',
+'Other':'Other',
+'Ind':'Independant',
+'Libert':'Libertarian',
+'Green':'Green',
+'Const':'Const',
+'Reform':'Reform',
+'Soc Wk':'SocWk',
+'Male':'Male',
+'Female':'Female',
+'Registered':'Registered'}

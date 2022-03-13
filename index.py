@@ -12,8 +12,10 @@ import ast
 # loads dictionary from countydict.txt file
 with open("Voter_Data/countydict.txt", "r") as data:
     counties = ast.literal_eval(data.read())
-# with open("Voter_Data/demographicsdict.txt", "r") as data:
-#     counties = ast.literal_eval(data.read())
+
+# load dictionary of demographics from demographics.txt
+with open("Voter_Data/demographicsdict.txt", "r") as demos:
+    demographics = ast.literal_eval(demos.read())
 
 # reads voterstats Excel sheet into a pandas DataFrame
 df = pd.read_excel(r"/Users/nigelmeyer/Desktop/Python/Voter_Data/voterstats-20220215-080324.xls")
@@ -21,27 +23,9 @@ df = pd.read_excel(r"/Users/nigelmeyer/Desktop/Python/Voter_Data/voterstats-2022
 # splits the 'County' column after the index number into 'Index' and 'County' columns
 df[['index', 'County']] = df['County'].str.split(expand=True)
 
-
-# main function
-def main(df):
-
-    # loops program
-    while True:
-
-        # prints list of available counties
-        for county in counties.keys():
-            print(county)
-        
-        print('\n')
-
-        printcountychoices(df)
-
-
-
-
-    
-    
-
+# makes column names all lowercase
+df.columns = map(str.lower, df.columns)
+print(df.columns)
 
 # prints the counties the user has requested
 def printcountychoices(df):
@@ -50,7 +34,7 @@ def printcountychoices(df):
             sys.exit(0)
     else:        
         try:
-            print(df[df['County'].isin(chosen_counties.split()[:-1])])
+            print(df[df['county'].isin(chosen_counties.split()[:-1])])
             print_bar_graph(df, chosen_counties)
             input("Press RETURN to continue.")
         except:
@@ -66,35 +50,45 @@ def continuouscounty():
         choice = input(
                     "List the counties you would like to see and press enter:\n\
                     Then enter 'C' when you're ready to continue.\n\
-                    Enter 'Q' to quit at anytime\n").upper()
+                    Enter 'Q' to quit at anytime\n\n").upper()
         county_list += choice + ' '
         if choice == 'Q':
             return county_list
         elif choice == 'C':
             return county_list  
 
-def print_bar_graph(df, chosen_counties):
-    
-    # x = chosen_counties.split()[:-1]
-    # y = df.columns[2:4]
 
-    chosen_plot = df[df['County'].isin(chosen_counties.split()[:-1])]
-    ax = chosen_plot.plot(kind='bar')
-    # ax = df[['Rep','Dem']].plot(x='County', kind='bar', title ="V comp", figsize=(15, 10), legend=True, fontsize=12)
+def demo_y_axis():
+
+    print("\n\n")
+    for demographic in demographics:
+        
+        print(demographic)
+    chosen_y_axis = input("\nChoose which demographics you want to compare.\n\n").lower()
+    return chosen_y_axis.split()
+
+def print_bar_graph(df, chosen_counties):
+
+    chosen_plot = df[df['county'].isin(chosen_counties.split()[:-1])]
+    y_axis = demo_y_axis()
+    ax = chosen_plot.plot(y=y_axis, kind='bar')
     ax.set_xlabel("County", fontsize=12)
-    ax.set_ylabel("Registered", fontsize=12)
+    ax.set_ylabel("Number of Registered", fontsize=12)
     plt.show()
 
-    # print(type(x))
-    # print(x)
-    # print(type(y))
-    # print(y)
-    # plt.bar(x,y)
-    # plt.xlabel("Counties")
-    # plt.ylabel("Number of Registered Voters")
-    # plt.title("Number of Democrats and Republicans in each county")
-    
+# main function
+def main(df):
 
+    # loops program
+    while True:
+
+        # prints list of available counties
+        for county in counties.keys():
+            print(county)
+        
+        print('\n')
+
+        printcountychoices(df)
 
 if __name__ == "__main__":
     main(df) 
