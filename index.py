@@ -69,11 +69,12 @@ def print_bar_graph(df, chosen_counties):
     
     chosen_plot = df[df['county'].isin(chosen_counties.split()[:-1])]
     y_axis = demo_y_axis()
-    print(chosen_counties)
-    ax = chosen_plot.plot(y=y_axis, kind='bar')
+    print(chosen_plot)
+    ax = chosen_plot.plot(x='county', y=y_axis, kind='bar')
     ax.set_xlabel("County", fontsize=12)
     ax.set_ylabel("Number of Registered", fontsize=12)
-    for p in ax.patches:
+
+    for p in ax.patches:                                        # this prints the totals atop the bars
         ax.annotate(int(p.get_height()), (p.get_x() * 1.005, p.get_height() * 1.005))
    
 
