@@ -25,7 +25,6 @@ df[['index', 'County']] = df['County'].str.split(expand=True)
 
 # makes column names all lowercase
 df.columns = map(str.lower, df.columns)
-print(df.columns)
 
 # prints the counties the user has requested
 def printcountychoices(df):
@@ -62,18 +61,22 @@ def demo_y_axis():
 
     print("\n\n")
     for demographic in demographics:
-        
         print(demographic)
     chosen_y_axis = input("\nChoose which demographics you want to compare.\n\n").lower()
     return chosen_y_axis.split()
 
 def print_bar_graph(df, chosen_counties):
-
+    
     chosen_plot = df[df['county'].isin(chosen_counties.split()[:-1])]
     y_axis = demo_y_axis()
+    print(chosen_counties)
     ax = chosen_plot.plot(y=y_axis, kind='bar')
     ax.set_xlabel("County", fontsize=12)
     ax.set_ylabel("Number of Registered", fontsize=12)
+    for p in ax.patches:
+        ax.annotate(int(p.get_height()), (p.get_x() * 1.005, p.get_height() * 1.005))
+   
+
     plt.show()
 
 # main function
