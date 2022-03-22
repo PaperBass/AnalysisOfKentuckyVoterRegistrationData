@@ -10,15 +10,15 @@ import matplotlib.pyplot as plt
 import ast
 
 # loads dictionary from countydict.txt file
-with open("Voter_Data/countydict.txt", "r") as data:
+with open("countydict.txt", "r") as data:
     counties = ast.literal_eval(data.read())
 
 # load dictionary of demographics from demographics.txt
-with open("Voter_Data/demographicsdict.txt", "r") as demos:
+with open("demographicsdict.txt", "r") as demos:
     demographics = ast.literal_eval(demos.read())
 
 # reads voterstats Excel sheet into a pandas DataFrame
-df = pd.read_excel(r"/Users/nigelmeyer/Desktop/Python/Voter_Data/voterstats-20220215-080324.xls")
+df = pd.read_excel(r"voterstats-20220215-080324.xls")
 
 # splits the 'County' column after the index number into 'Index' and 'County' columns
 df[['index', 'County']] = df['County'].str.split(expand=True)
