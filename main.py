@@ -74,7 +74,8 @@ def print_bar_graph(df, chosen_counties):
     ax.set_xlabel("County", fontsize=12)
     ax.set_ylabel("Number of Registered", fontsize=12)
 
-    for p in ax.patches:                                        # this prints the totals atop the bars
+    # this prints totals on top of the bars
+    for p in ax.patches:    
         ax.annotate(int(p.get_height()), (p.get_x() * 1.005, p.get_height() * 1.005))
    
 
