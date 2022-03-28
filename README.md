@@ -13,6 +13,7 @@ This program is designed to visualize voter registration data for the US state K
 
 The packages needed for this progam are listed below and can be found in the requirements.txt file:
 
+python==3.10.1
 cycler==0.11.0
 fonttools==4.31.2
 kiwisolver==1.4.1
